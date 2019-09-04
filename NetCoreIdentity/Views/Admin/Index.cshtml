@@ -1,0 +1,52 @@
+﻿@model IEnumerable<ApplicationUser>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="bg-primary text-white p-1 m-1">
+    <h2>User List</h2>
+</div>
+
+<div class="text-danger" asp-validation-summary="ModelOnly">
+
+</div>
+
+<table class="table table-bordered table-striped table-sm p-1 m-1">
+    <tr>
+        <th>UserId</th>
+        <th>User Name</th>
+        <th>E mail</th>
+        <th></th>
+    </tr>
+
+    @if (!Model.Any())
+    {
+        <tr>
+            <td colspan="3">
+                No users
+            </td>
+        </tr>
+    }
+    else
+    {
+        foreach (ApplicationUser applicationUser in Model)
+        {
+            <tr>
+                <td>@applicationUser.Id</td>
+                <td>@applicationUser.UserName</td>
+                <td>@applicationUser.Email</td>
+                <td>
+                    <form asp-route-id="@applicationUser.Id"  asp-action="Delete" method="post">
+                        <button type="submit" class="btn btn-danger">Sil</button>
+                    </form>
+                </td>
+
+            </tr>
+        }
+    }
+
+</table>
+
+<a asp-action="Create" class="btn btn-primary">
+    Create User
+</a>

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="bg-primary text-white p-1 m-1">
+    <h2>Role List</h2>
+</div>
+
+<div class="text-danger" asp-validation-summary="ModelOnly"></div>
+@if (TempData["message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["message"]
+    </div>
+}
+<table class="table table-bordered table-striped table-sm p-1 m-1">
+    <tr>
+        <th>RoleId</th>
+        <th>RoleName</th>
+        <th>Users</th>
+        <th></th>
+    </tr>
+
+    @if (!Model.Any())
+    {
+        <tr>
+            <td colspan="3">
+                No users
+            </td>
+        </tr>
+    }
+    else
+    {
+        foreach (var role in Model)
+        {
+            <tr>
+                <td>@role.Id</td>
+                <td>@role.Name</td>
+                <td identity-role="@role.Id"></td>
+                <td>
+                    <form asp-route-id="@role.Id" asp-action="Delete" method="post">
+                        <button type="submit" class="btn btn-danger">Sil</button>
+                        <a asp-action="Update" asp-route-id="@role.Id" class="btn btn-primary">Güncelle</a>
+                    </form>
+                </td>
+
+            </tr>
+        }
+    }
+
+</table>
+
+<a asp-action="Create" class="btn btn-primary">
+    Create Role
+</a>
